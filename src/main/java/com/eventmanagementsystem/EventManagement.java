@@ -22,3 +22,71 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+public class EventManagement extends JFrame {
+
+    private JFrame mainFrame;
+    private HomePage homePage;
+    private AdminLoginPage adminLoginPage;
+
+    // Add these fields to your EventManagement class
+    private final ParticipantRepository participantRepository;
+    private final EventRepository eventRepository;
+
+   public EventManagementc() {
+
+    // Initialize repositories
+    this.participantRepository = new JdbcParticipantRepository();
+    this.eventRepository = new JdbcEventRepository();
+    initialize();
+   }
+
+   private void initialize() {
+
+    // Set up the main application window
+    mainFrame = new JFrame("Event Management System");
+    mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    mainFrame.setSize(1000, 700); // Slightly larger to accomodate the admin login
+    mainFrame.setMinimumSize(new Dimension(800, 600));
+
+    // Center the window on screen
+    mainFrame.setLocationRelativeTo(null);
+
+    // Show the home page
+    showHomePage();
+
+    // Make the window visible
+    mainFrame.setVisible(true);
+   }
+
+   private void showHomePage() {
+
+    // Clear the current content
+    mainFrame.getContentPane().removeAll();
+
+    // Create and add the home page
+    homePage = new HomePage(mainFrame);
+    homepage.setButtonListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == homePage.getAdminButton()) {
+                showAdminLogin();
+            } else if (e.getSource() == homePage.getStudentButton()) {
+                showStudentRegistration();
+            }
+        }
+    });
+
+    mainFrame.add(homePage);
+    mainFrame.revalidate();
+    mainFrame.repaint();
+   }
+
+   private void showAdminLogin() {
+
+    // Clear the current content
+    mainFrame.getContentPane().removeAll();
+
+    // Create and add the admin login page
+    adminLoginPage = new AdminLoginPage(mainFrame);
+   }
+}
