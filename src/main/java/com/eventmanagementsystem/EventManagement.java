@@ -66,6 +66,7 @@ public class EventManagement extends JFrame {
     // Create and add the home page
     homePage = new HomePage(mainFrame);
     homepage.setButtonListener(new ActionListener() {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == homePage.getAdminButton()) {
@@ -88,5 +89,42 @@ public class EventManagement extends JFrame {
 
     // Create and add the admin login page
     adminLoginPage = new AdminLoginPage(mainFrame);
+    adminLoginPage.setButtonListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == adminLoginPage.getLoginButton()) {
+                handleAdminLogin();
+            } else if (e.getSource() == adminLoginPage.getBackButton()) {
+
+                // Go back to the home page
+                showHomePage();
+            }
+        }
+    });
+
+    mainFrame.add(adminLoginPage);
+    mainFrame.revalidate();
+    mainFrame.repaint();
+   }
+
+   private void handleAdminLogin() {
+    String selectedEvent = adminLoginPage.getSelectedEvent();
+    char[] password = adminLoginPage.getPassword();
+
+    // Verify password (replace with your actual password verification logic)
+    if (Arrays.equals(password, "Super@1999".toCharArray())) {
+
+        // Password is correct, show event details
+        showEventDetails(selectedEvent);
+    } else {
+
+        // Show error message
+        JOptionPane.showMessageDialog(
+            mainFrame,
+            "Invalid password. Please try again.",
+            "Authentication Failed",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
    }
 }
