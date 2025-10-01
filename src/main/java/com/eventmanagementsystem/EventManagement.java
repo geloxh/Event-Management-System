@@ -141,5 +141,14 @@ public class EventManagement extends JFrame {
     mainFrame.add(loadingPanel);
     mainFrame.revalidate();
     mainFrame.repaint();
+
+    // Load data in a background thread
+    new SwingWorker<List<Participant>, Void>() {
+        @Override
+        protected List<Participant> doInBackground() throws Exception {
+
+            // Find the event by name
+        }
+    }
    }
 }
