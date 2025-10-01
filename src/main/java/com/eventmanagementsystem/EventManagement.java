@@ -32,7 +32,7 @@ public class EventManagement extends JFrame {
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
 
-   public EventManagementc() {
+   public EventManagement() {
 
     // Initialize repositories
     this.participantRepository = new JdbcParticipantRepository();
@@ -125,6 +125,21 @@ public class EventManagement extends JFrame {
             "Authentication Failed",
             JOptionPane.ERROR_MESSAGE
         );
+
+        // Clear the password field
+        adminLoginPage.clearPassword();
     }
+   }
+
+   private void showEventDetails(String eventName) {
+    
+    mainFrame.getContentPane().removeAll();
+
+    // Show loading state
+    JPanel loadingPanel = new JPanel(new BorderLayout());
+    loadingPanel.add(new JLabel("Loading registrations...", JLabel.CENTER), BorderLayout.CENTER);
+    mainFrame.add(loadingPanel);
+    mainFrame.revalidate();
+    mainFrame.repaint();
    }
 }
