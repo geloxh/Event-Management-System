@@ -148,6 +148,27 @@ public class EventManagement extends JFrame {
         protected List<Participant> doInBackground() throws Exception {
 
             // Find the event by name
+            List<Event> events = eventRepository.findByNameContaining(eventName);
+            if (events.isEmpty()) {
+                throw new RuntimeException("Event not found: " + eventName);
+            }
+
+            // Get participants for the first matching event
+            return participantRepository.findByEventId(events.get(0).getId());
+        }
+
+        @Override
+        protected void done() {
+            try {
+                List<Participant> participants = get();
+
+                // Remove loading panel
+                mainFrame.remove(loadingPanel);
+
+                // Create and show the event details page
+                EventDetailsPage eventDetailsPage = new EventDetailsPage(mainFrame);
+                eventDetailsPage.setEventName
+            }
         }
     }
    }
