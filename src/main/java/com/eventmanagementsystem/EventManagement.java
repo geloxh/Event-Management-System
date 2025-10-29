@@ -167,9 +167,46 @@ public class EventManagement extends JFrame {
 
                 // Create and show the event details page
                 EventDetailsPage eventDetailsPage = new EventDetailsPage(mainFrame);
-                eventDetailsPage.setEventName
+                eventDetailsPage.setEventName(eventName);
+
+                // Convert participants to a format the table can display
+                eventDetailsPage.loadParticpants(participants);
+
+                eventDetailsPage.setButtonListener(e -> {
+                    if (e.getSource() == eventDetailsPage.getBackButton()) {
+                        showAdminLogin();
+                    }
+                });
+
+                mainFrame.add(eventDetailsPage);
+                mainFrame.revalidate();
+                mainFrame.repaint();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                    mainFrame,
+                    "Error loading event data: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                showAdminLogin();
             }
         }
-    }
-   }
+    }.execute();
+}
+
+private void showStudentRegistration() {
+    mainFrame.getContentPane().removeAll();
+
+    StudentRegistrationPage registrationPage = new StudentRegistrationPage(mainFrame);
+    registrationPage.setButtonListener(e -> {
+        if (e.getSource() == registrationPage.getBackButton()) {
+            showHomePage(); // Go back to Home page
+        }
+    });
+
+    mainFrame.add(registrationPage);
+    mainFrame.revalidate();
+    mainFrame.repaint();
+}
 }
